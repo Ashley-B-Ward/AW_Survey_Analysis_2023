@@ -48,9 +48,7 @@ library("parameters")
 library("tidySEM")
 library("mediation")
 
-# Data original = the raw df with headers, strings as factors and missing values accounted for
-
-setwd("C:/Users/award/OneDrive - SRUC/FINAL YEAR/SURVEY/SmartSurvey_Data")
+# Data original = the raw df with headers, strings as factors and missing values formatted as ^
 
 data_original <- read.csv("raw_survey_complete_plus_partial_responses.csv",
                           header = TRUE, na.strings = "^", stringsAsFactors = TRUE)
@@ -58,17 +56,14 @@ data_original <- read.csv("raw_survey_complete_plus_partial_responses.csv",
 library(dplyr)
 library(forcats)
 
-## Data underwent filtering and removal of questions for seperate analsis in Excel. 
-
-
-
+## Data had undergone filtering and removal of questions for seperate analsis in Excel. 
 
 ## Select only those who have given an answer to the first and last questions. 
 ## This approach is to minimize the number of missing values that were random, 
 ## and to retain missing values that occurred between the respondent answering the first and last 
 ## questions- making an assumption that those were skipped purposefully and thus contain information 
 
-dat1_original <- data_original %>% drop_na(number_of_horses, conf_rec_lam) 
+dat1_original <- data_original %>% drop_na(number_of_horses, conf_rec_lam) # 
 # rows with na's between 1st and last question dropped
 
 dat1<- data_original %>% drop_na(number_of_horses, conf_rec_lam) 
@@ -77,92 +72,6 @@ dat1<- data_original %>% drop_na(number_of_horses, conf_rec_lam)
 
 
 #Creating new variables (Tidying the raw data - collapsing, re-ordering and re-coding messy variables)
-
-#Create a new variable coded 1 if the respondent sources information from themselves, and 0 if they outsource 
-dat1$info_feeding <- fct_collapse(dat1$info_feed2, 
-                                  "1" = c("BSc in Animal nutrition and physiology","Experience", "I am always researching.",
-                                          "Multiple sources - wild horse research groups (what horses evolved to eat), modern research like Carol Hughes Equine Micro Biome, Equitopia holistic education etc. NOT feed companies ",
-                                          "My equine based qualification", "Own research" , "Own research and experience",
-                                          "Reading ", "Research ", "specialist breed forum" , "The Laminitis Site", 
-                                          "Web based feeding guidance" ),
-                                  
-                                  "0" =c("available (specialist) feed in shop",
-                                         "Barefoot schools/groups",
-                                         "As well as trained friend that owns animal feed store & follow farriers advice too.",
-                                         "&also vet/nutritionistadvice asked if unsure",
-                                         "A combination of all of the above ", 
-                                         "Barefoot schools/groups", 
-                                         "equine podiatrist", "Equine podiatrist ","don't feed", "BHS", 
-                                         "Barefoot schools/groups","Family / friend advice",
-                                         "Feed retailer / feed representative", "Groom" ,
-                                         "Industry professional (E.g. farrier, equine dental technician)", 
-                                         "Previous ownerd" , 
-                                         "Professional advice (E.g. veterinarian/ nutritionist)", "Tack shop" ,
-                                         "Trainer / coach", "Yard owner / manager", 
-                                         "My EP (barefoot trimmer) and barefoot group on social media ")
-)
-
-
-
-
-
-
-#Create a new variable coded 1 if the respondent sources information from themselves, and 0 if they outsource 
-summary(dat1$info_weight)
-
-dat1$info_weight <- fct_collapse(dat1$info_weight, 
-                                 "Other industry professional" = c("Industry professionals (e.g.managers / instructors )",
-                                                                   "Farmer / agricultural contractor"))
-
-
-
-#Create a new variable coded 1 if the respondent sources information from themselves, and 0 if they outsource 
-summary(dat1$info_health)
-
-
-
-
-
-
-#Create a new variable coded 1 if the respondent sources information from themselves, and 0 if they outsource 
-dat1$info_pasture 
-
-
-
-
-
-
-
-
-
-
-#Create a new variable coded 1 if the respondent sources information from themselves, and 0 if they outsource 
-dat1$info_nutrition <- fct_collapse(dat1$info_nutrition, 
-                                    "Other industry professional" = c("Industry professionals (e.g.managers / instructors )",
-                                                                      "Farmer / agricultural contractor"))
-
-
-
-
-
-
-# Create a binary variable - always vs not always controlling pasture access 
-dat1$PAST <- fct_collapse(dat1$freq_turnoutroutine,
-                          "1" = "Always", 
-                          "0" = c("Occasionally","Never"))
-# convert to numeric 
-dat1$PAST <- as.numeric(dat1$PAST)
-
-
-
-
-
-
-
-
-
-
-
 
 # Create a 5 point ordered variable - frequency of weight monitoring (with 1-5 as factors) 
 dat1$MON1 <- fct_collapse(dat1$wgt_monitor,
@@ -206,6 +115,10 @@ dat1$MON2.2 <- fct_collapse(dat1$MON2,
 
 # Create new variable - method of weight monitoring with 1 = a measurement based method
 # and 0 = a non-measurement based method or "other"
+
+# note- owners selected their primary method but where they selected "other" they described their own practice. If owners did not select one of the options available which indicated a 
+# standardised practice- they were included in the "0" non-standardised category. Despite some of these owners stating methods which appear to have included some form of standardised practice. 
+# To avoid subjective categorisation, anything repsonse provided in the "other" category was consiedered non-standardised. This is applicable for both the weight and BCS variables 
 
 dat1$MON3 <- fct_collapse(dat1$wgt_how, 
                           "1" = c("Weighbridge","Scales", "And weighbridge when available ", "Weigh bridge and tape", 
