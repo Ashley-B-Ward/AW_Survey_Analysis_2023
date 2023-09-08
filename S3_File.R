@@ -120,72 +120,14 @@ dat1$MON2.2 <- fct_collapse(dat1$MON2,
 # standardised practice- they were included in the "0" non-standardised category. Despite some of these owners stating methods which appear to have included some form of standardised practice. 
 # To avoid subjective categorisation, anything repsonse provided in the "other" category was consiedered non-standardised. This is applicable for both the weight and BCS variables 
 
-dat1$MON3 <- fct_collapse(dat1$wgt_how, 
-                          "1" = c("Weighbridge","Scales", "And weighbridge when available ", "Weigh bridge and tape", 
-                                  "Weigh bridge couple of times a year to help calibrate weigh tape",
-                                  "Weighbridge annually, tapemeasure every 2 weeks, daily condition score visually",
-                                  "Also used weighbridge and tape","Weighbridge","Weighbridge also monthly", 
-                                  "Estimation through calculation","Tape calibrated against a weigh bridge", "Tape measure", 
-                                  "Tape measure and visual assessment", "tape measure following visual assessment", "and tape",
-                                  "And weigh tape weekly", "Weigh tape", "Weight tape with tb and BCS with ( year old youngster ",
-                                  "Weight tape, photos and feeling ribs", "Weightape and weighbridge ", "When required weight tape",
-                                  "I do use a tape but also by eye", "I use both tape & visual", "Tape and visual","Tape measure",
-                                  "Both tape and visually", "Normally a tape measure and sometimes a weigh bridge when it is available",
-                                  "Plus weight tape", "Tape and visual ", "Weigh tape, sometimes compared to a weight formula x"
-                          ),
-                          "0" = c("Observation ", "tape measure, visually, and how many hole i can get the girth up ?? ", "Visual", 
-                                  "Visual and tape measure", "Visual assessment", "Visual assessment ", "And visual ", 
-                                  "and visual assessment","And visually & calculation ", 
-                                  "Daily visually, weekly with tape and twice yearly on weight bridge ",
-                                  "visual assessment and weighbridge","And by sight/feel","Visual assessment", "And visually ",
-                                  "Visual also", "Visual and feel", "Visual and hands on", "Visual assessment daily, tape measure once a month",
-                                  "Visual assessment recently due to being happy with weight and lightly monitoring during winter ",
-                                  "A mix of first 4 ", "also check pulses and hoof heat", "and calculation ","App",
-                                  "Because not accurate unless weighbridge available. Condition scoring seems more practical",
-                                  "Body weight scoring","Growing baby",
-                                  "Shes been weighed twice though in her life which I much prefer", "Combination as said previously",
-                                  "I generally do not monitor my horses weight")
-)
-
-
 dat1$MON3.1 <- fct_collapse(dat1$wgt_how, 
-                            "1" = c("Weighbridge","Tape measure", "Estimation through calculation"),
-                            "0" = "Visual assessment", 
-                            "NA" = c("Scales", "And weighbridge when available ", "Weigh bridge and tape", 
-                                     "Weigh bridge couple of times a year to help calibrate weigh tape",
-                                     "Weighbridge annually, tapemeasure every 2 weeks, daily condition score visually",
-                                     "Also used weighbridge and tape","Weighbridge","Weighbridge also monthly", 
-                                     "Tape calibrated against a weigh bridge", "Tape measure and visual assessment", "tape measure following visual assessment", "and tape",
-                                     "And weigh tape weekly", "Weigh tape", "Weight tape with tb and BCS with ( year old youngster ",
-                                     "Weight tape, photos and feeling ribs", "Weightape and weighbridge ", "When required weight tape",
-                                     "I do use a tape but also by eye", "I use both tape & visual", "Tape and visual","Tape measure",
-                                     "Both tape and visually", "Normally a tape measure and sometimes a weigh bridge when it is available",
-                                     "Plus weight tape", "Tape and visual ", "Weigh tape, sometimes compared to a weight formula x","Observation ", "tape measure, visually, and how many hole i can get the girth up ?? ", "Visual", 
-                                     "Visual and tape measure", "Visual assessment ", "And visual ", 
-                                     "and visual assessment","And visually & calculation ", 
-                                     "Daily visually, weekly with tape and twice yearly on weight bridge ",
-                                     "visual assessment and weighbridge","And by sight/feel","Visual assessment", "And visually ",
-                                     "Visual also", "Visual and feel", "Visual and hands on", "Visual assessment daily, tape measure once a month",
-                                     "Visual assessment recently due to being happy with weight and lightly monitoring during winter ",
-                                     "A mix of first 4 ", "also check pulses and hoof heat", "and calculation ","App",
-                                     "Because not accurate unless weighbridge available. Condition scoring seems more practical",
-                                     "Body weight scoring","Growing baby",
-                                     "Shes been weighed twice though in her life which I much prefer", "Combination as said previously",
-                                     "I generally do not monitor my horses weight")
+                            "1" = c("Weighbridge", "Tape measure", "Estimation through calculation"),
+                            "0" = "Visual assessment", "Other")
 )
 
 # Create new variable - method of body condition monitoring with 1 = a scale / measurement based method
 # and 0 = a non-measurement based method or "other"
 
-
-dat1$MON4 <- fct_collapse(dat1$bcs_how, 
-                          "1" = c("Body condition scoring using a 1-5 scale system", 
-                                  "Body condition scoring using a 1-9 scale system",
-                                  "Measurement of heart-girth, belly-girth and neck",
-                                  "Taking measurements and using an online body condition calculator"),
-                          "0" = c("Estimation through visual assessment and feeling the horse's body",
-                                  "Estimation through visual assessment only","Other") 
-)
 
 dat1$MON4.1 <- fct_collapse(dat1$bcs_how, 
                             "1" = c("Body condition scoring using a 1-5 scale system", 
@@ -253,6 +195,7 @@ dat1$soakhay <- fct_collapse(dat1$pres_forage_prefer,
 
 # Create new nominal factor - most important aspect of exercise 
 # Create new nominal factor - most important aspect of exercise 
+# Additional textual analysis was applied to aid categorisation of owners answers where they selected "Other" in response to this question, but their response fell clearly into a relevant category for analysis 
 dat1$EXER1 <- fct_collapse(dat1$exercise_imp, 
                                          "Weight management" = "Managing weight" ,  #managing weight 
                                          "Personal enjoyment" = "Enjoyment / hobby",#hobby 
@@ -1845,28 +1788,6 @@ confint(out.fit2TOT)
       confint(out.fit7.2)
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      #-----
-  
-#' Overall, the results suggest that those managing metabolic pony were far more likely 
-#' to perceive weight manangement as the most important outcome of exercise. Even though this may not be the case, and studies have shown that as part 
-#' of a weight loss regimen, exercise alone does not induce weight loss, although it does have beneficial effects on insulin sensitivity, we compare the 
-#' perception of those with metabolic ponies vs those without- and the results indicate an effective dissemination in this group compared to those not managing 
-#' metabolic needs. And also find an interesting negative relationship between >10 years of experience and having this perception. 
-#' 
-#' Possible that those with fewer years of experience more optimistic about weight management, or have less intensive performance based focus for exercise. 
-#' Findings support a need to disseminate the research showing the beneficial aspects of exercise for native ponies specifically to highlight 
-#' this tool - and maybe take the focus away from performance and towards health. 
-  
-  
-  
       
       
 # SUMMARIES OF MEDIATION
